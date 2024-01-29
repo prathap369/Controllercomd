@@ -1,0 +1,168 @@
+﻿<!--begin::notifytable-->
+        <div class="pt-5">
+            <button class="btn btn-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
+                Notification
+            </button>
+
+            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-100 w-lg-600px" data-kt-menu="true" id="dropdown-table">
+                <table class="table table-broderless gs-5  w-auto ">
+                    <thead>
+                        <tr>
+                            @*<th>slno</th>*@
+                            <th>Command</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTableBody">
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <!--end::notifytable-->
+
+
+
+
+
+
+
+
+
+
+
+
+@{
+    ViewBag.Title = "DeviceCtrl";
+}
+<div class="card shadow-sm">
+    <!--begin::Header-->
+    <div class="card-header">
+        <h3 class="card-title text-dark fw-bold fs-1 mx-auto">Controller Command</h3>
+        <!--begin::notifytable-->
+        <div class="pt-5">
+            <button class="btn btn-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
+                Notification
+            </button>
+
+            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-100 w-lg-600px" data-kt-menu="true" id="dropdown-table">
+                <table class="table table-broderless gs-5  w-auto ">
+                    <thead>
+                        <tr>
+                            @*<th>slno</th>*@
+                            <th>Command</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTableBody">
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <!--end::notifytable-->
+    </div>
+    <!--end::Header-->
+    <!--begin::body-->
+    <div class="card-body">
+        <form id="kt_modal_create_commdctrl1_form1" autocomplete="on" class="form" action="#">
+            <div class="row">
+                <div class="col-3 ">
+                    <div>
+                        <label class="fw-bold fs-5"> Controller IDs</label>
+
+                        <textarea class="form-control form-control--bg-hover-light-danger align-content-center mx-auto w-lg-260px" rows="4" maxlength="400" id="controller" name="textarea1" placeholder="Enter Controller ID with comma seperated">90380CC29120,58BF25288720</textarea>
+                    </div>
+                    <div class="pt-10 ">
+                        <select class="form-select form-select-bg-hover-light-danger" data-placeholder="Select the ControllerCommand" name="select" id="operationcommnd" data-control="select2" data-hide-search="false" onchange="updateTextarea()">
+                            <option disabled selected></option>
+                            <option value='{"cmd" : 100 }'>Reboot Device</option>
+                            <option value='{"cmd":101,"mode":0}'>SetDeviceMode</option>
+                            <option value='{"cmd": 102}'>GetDeviceMode</option>
+                            <option value='{"cmd": 111,"ssid": "Wifi-Name","psk": "abcd1234","dhcp": "Yes/No","ip": "192.168.0.111","msk": "192.168.0.1","gtw": "255.255.255.0","dns1": "8.8.8.8","dns2": "8.8.8.8"}'>
+                                SetWifiConfiguration
+                            </option>
+                            <option value='{"cmd": 112}'>GetWifiConfiguration</option>
+                            <option value='{"cmd": 111,"ssid": "Wifi-Name", "psk": "abcd1234", "dhcp": "Yes/No","ip": "192.168.0.111", "msk": "192.168.0.1","gtw": "255.255.255.0", "dns1": "8.8.8.8", "dns2": "8.8.8.8"}'>
+                                SetServerConfiguration
+                            </option>
+                            <option value='{"cmd": 122}'>GetServerConfiguration</option>
+                            <option value='{"cmd":125,"interval":60}'>SetHeartBeatInterval</option>
+                            <option value='{"cmd":126}'>GetHeartBeatInterval</option>
+                            <option value='{"cmd":131,"param":"from_mail_id,password,smpt_server,smptp_port,subject,to_mail_id1,to_mail_id2,to_mail_id3"}'>
+                                SetEmailConfiguration
+                            </option>
+                            <option value='{"cmd": 132}'>GetEmailConfiguration</option>
+                            <option value='{"cmd": 133,"schedule":"00:00"}'>SetEmailSchedule</option>
+                            <option value='{"cmd": 134}'>GetEmailSchedule</option>
+                            <option value='{"cmd":123,"mode":0}'>SetUTCTimeAuto</option>
+                            <option value='{"cmd": 124}'>GetUTCTimeAuto</option>
+                            <option value='{"cmd": 145,"schedule":"00:00"}'>SetDailyRebootTime</option>
+                            <option value='{"cmd": 146}'>GetDailyRebootTime</option>
+                            <option value='{"cmd":191,"mode":1,"url":"https://irizid.com/downloads/idmacs/firmware/firmware.bin"}'>UploadFirmware</option>
+                            <option value='{"cmd":108}'>GetFirmwareVersion</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <!--begin::Input group-->
+                    <div class="fv-row mb-7 mx-auto text-md-center me-9">
+                        <!--begin::Input-->
+                        <textarea class="form-control form-control--bg-hover-light-danger align-content-center mx-auto" rows="10" maxlength="400" id="command" name="textarea" placeholder="Enter Controller Command"></textarea>
+                        <!--end::Input-->
+                    </div>
+                </div>
+                <div class="col-3 pt-lg-15">
+                    <button type="button" id="kt_cmmdctrl_Get" onclick="addcommand()" class="btn btn-primary w-lg-150px">
+                        Send
+                    </button>
+
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+</div>
+<div>
+    @Html.Partial("_sweetalert");
+</div>
+
+
+@section scripts {
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+        var rowCount = 0;
+        $(function () {
+            var div1 = document.getElementById('note');
+            var chat = $.connection.CtrlHub;
+            chat.client.addNew = function (name, message) {
+                //$('#discussion').append('<ul style="list-style-type:square"><li><strong style="color:red;font-style:normal;font-size:medium;text-transform:uppercase">' + htmlEncode(name) + '  ' + '<strong style="color:black;font-style:normal;font-size:medium;text-transform:lowercase">said</strong>'
+                //      + '</strong>: ' + '<strong style="color:blue;font-style:oblique;font-size:medium">' + htmlEncode(message) + '</strong>' + '</li></ul>');
+                //  alert(name + ',' + message );
+                Sweetalert(name,message);
+            };
+        
+            
+            $.connection.hub.start().done(function () {
+                $('#sendmessage').click(function () {
+                    chat.server.send($('#displayname').val(), $('#message').val());
+                    $('#message').val('').focus();
+                });
+            });
+        });
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+
+        function updateTextarea() {
+            var operation1 = document.getElementById('operationcommnd').value;
+            document.getElementById('command').value = operation1;
+        }
+        // Get the current time
+       
+    </script>
+
+}

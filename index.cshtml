@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "index";
+}
+
+<h2>index</h2>
+
+<!--begin::Modal body-->
+<div class="modal-body overflow-auto scroll-y px-6 px-lg-6 pt-0 pb-6 ">
+    <div class=" h-350px px-3 ">
+        <!--begin:Form-->
+        <form id="kt_modal_add_Reissue_form" autocomplete="on" class="form" action="#">
+            <!--begin::Input group-->
+            <div class="fv-row col-5 mx-auto">
+                <!--begin::Label-->
+                <label class="fs-5 fw-bold form-label mt-5">
+                    <span class="required">IDs</span>
+                </label>
+                <!--end::Label-->
+                <!--begin::Input-->
+                <input type="number" id="idmacs" readonly class="form-control form-control-solid" name="" value="902342154223"/>
+                <!--end::Input-->
+            </div>
+            <!--end::Input group-->
+                <div class="fv-row col-5 mb-11 mx-auto">
+                    <!--begin::Label-->
+                    <label class="fs-5 fw-bold form-label mt-2">
+                        <span class="required">enter text</span>
+                    </label>
+                    <!--end::Label-->
+                    <!--begin::Input-->
+                    <input type="text" id="text" placeholder="enter text" class="form-control form-control-solid" />
+                    <!--end::Input-->
+                </div>
+            <!--end::Input group-->
+           
+            <!--begin::Actions-->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary" onclick="addData()">
+                    <span id="btnPopSubmit" ng-model="name" class="indicator-label">Submit</span>
+                    <span class="indicator-progress">
+                        Please wait...
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                    </span>
+                </button>
+            </div>
+            <!--end::Actions-->
+        </form>
+        <!--end:Form-->
+    </div>
+
+</div>
+<!--end::Modal body-->
+
+
+<div>
+    @Html.Partial("_sweetalert")
+</div>
+<script>
+    function addData() {
+        var ids = document.getElementById('idmacs').value;
+        var mess = document.getElementById('text').value;
+        Sweetalert(ids, mess);
+    }
+
+</script>
